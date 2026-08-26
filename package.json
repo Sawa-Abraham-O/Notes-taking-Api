@@ -1,0 +1,24 @@
+{
+  "name": "notesapi",
+  "version": "1.0.0",
+  "description": "A note taking api that perform perform crud operations",
+  "homepage": "https://github.com/Sawa-Abraham-O/Notes-taking-Api#readme",
+  "bugs": {
+    "url": "https://github.com/Sawa-Abraham-O/Notes-taking-Api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Sawa-Abraham-O/Notes-taking-Api.git"
+  },
+  "license": "ISC",
+  "author": "BD team group 4",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
