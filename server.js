@@ -5,8 +5,6 @@ const app = express();
 const PORT = process.env.PORT || 3000
 
 let notes = [];
-    
-
 let id_count = 1;
 
 app.use(express.json());
@@ -22,9 +20,9 @@ app.get("/",(req,res)=>{
   res.json({message:"Notes taking api is running successfully"})
 })
 
-// TODO
 
-//1. create a get request to fetch all notes
+
+// create  get request to fetch all notes
 //GET /notes
   app.get("/notes",(req,res)=>{
   res.json({
@@ -35,25 +33,24 @@ app.get("/",(req,res)=>{
 
 
 
-//create a post request to create a note
+//create  post request to create a note
 //POST /notes
 
 app.post("/notes",(req,res)=>{
-  const newNote= req.body;
-
-  if(Array.isArray(newNote)){
-    notes.push(...newNote);
-    return res.status(201).json({
-      message: `${newNote.length} notes created successfully`,
-      notes: newNote
-    });
-  }
-   
+  const { title, content } = req.body;
+    if (!title || !content) {
+    return res.status(400).json({ error: 'Title and content are required' })};
+  newNote = {
+    "id":id_count,
+    title,
+    content,
+    "createdAt":new Date().toString(),
+    
+  };
+  
   notes.push(newNote);
-  res.status(201).json({
-    message: "note created successfully",
-    note: newNote
-  });
+  id_count += 1;
+  res.status(201).json(newNote);
 });
 
 //create a get request to fetch a single notes
@@ -63,39 +60,30 @@ app.get("/notes/:id",(req,res)=>{
   const note = notes.find(n => n.id === noteId);
   if(!note){
     return res.status(404).json({
-      message: "note not found"
-
-    })
-
-  }
+      message: "note not found"});
+}
   res.json(note);
 });
      
-
-//create a update request to update a note
-//UPDATE /notes/:id4.
-
+//create update request to update a note
+//UPDATE /notes/:id
 app.put("/notes/:id",(req,res)=>{
   const noteId = parseInt(req.params.id);
-  const noteIndex = notes.findIndex(n => n.id === noteId);
-  if(noteIndex === -1){
+  const getNote= notes.find(note => note.id == noteId);
+  if(!getNote){
     return res.status(404).json({
       message: "note not found"
     });
   }
-  notes[noteIndex] = {
-    ...notes[noteIndex],
-    ...req.body
-    };
-  res.json({
-    message: "note updated successfully",
-    note: notes[noteIndex]
-  });
+  const {title, content} = req.body;
+  getNote.title = title ?? getNote.title;
+  getNote.content = content ?? getNote.content;
+  getNote["updatedAt"] = new Date().toString();
+  res.status(201).json(getNote);
 });
 
-//create a delete request to delete a note
+//create delete request to delete a note
 //DELETE /notes/:id
-
 app.delete("/notes/:id",(req,res)=>{
   const noteId = parseInt(req.params.id);
   const noteIndex = notes.findIndex(n => n.id === noteId);
