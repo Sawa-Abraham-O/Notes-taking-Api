@@ -43,13 +43,13 @@ notes-api/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/Sawa-Abraham-O/Notes-taking-Api.git
 ```
 
 ### 2. Navigate into the project
 
 ```bash
-cd notes-api
+cd Notes-taking-Api
 ```
 
 ### 3. Install dependencies
